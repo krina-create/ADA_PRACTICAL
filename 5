@@ -1,0 +1,60 @@
+import java.util.Random;
+
+public class QuickSortDemo {
+
+    // Function to partition the array
+    public static int partition(int[] arr, int low, int high) {
+        int pivot = arr[high]; // choose last element as pivot
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (arr[j] < pivot) {
+                i++;
+
+                // swap arr[i] and arr[j]
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        // place pivot in correct position
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+
+        return i + 1;
+    }
+
+    // Function to perform Quick Sort
+    public static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            int pi = partition(arr, low, high);
+
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
+        }
+    }
+
+    public static void main(String[] args) {
+        int size = 10000; // Large dataset
+        int[] arr = new int[size];
+        Random rand = new Random();
+
+        // Generate random numbers
+        for (int i = 0; i < size; i++) {
+            arr[i] = rand.nextInt(10000);
+        }
+
+        // Measure execution time
+        long startTime = System.nanoTime();
+
+        quickSort(arr, 0, arr.length - 1);
+
+        long endTime = System.nanoTime();
+
+        long executionTime = endTime - startTime;
+
+        System.out.println("Execution Time (in nanoseconds): " + executionTime);
+    }
+}
