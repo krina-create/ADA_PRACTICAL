@@ -1,0 +1,64 @@
+import java.util.Arrays;
+import java.util.Random;
+
+public class SearchComparison {
+
+    // Linear Search
+    public static int linearSearch(int[] arr, int key) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == key) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // Binary Search
+    public static int binarySearch(int[] arr, int key) {
+        int left = 0, right = arr.length - 1;
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+
+            if (arr[mid] == key)
+                return mid;
+            else if (arr[mid] < key)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        int size = 10000;
+        int[] arr = new int[size];
+        Random rand = new Random();
+
+        // Generate random data
+        for (int i = 0; i < size; i++) {
+            arr[i] = rand.nextInt(10000);
+        }
+
+        int key = arr[size / 2]; // choose an existing element
+
+        // Linear Search Time
+        long startLinear = System.nanoTime();
+        int result1 = linearSearch(arr, key);
+        long endLinear = System.nanoTime();
+
+        // Sort array for Binary Search
+        Arrays.sort(arr);
+
+        // Binary Search Time
+        long startBinary = System.nanoTime();
+        int result2 = binarySearch(arr, key);
+        long endBinary = System.nanoTime();
+
+        System.out.println("Linear Search Index: " + result1);
+        System.out.println("Linear Search Time: " + (endLinear - startLinear) + " ns");
+
+        System.out.println("Binary Search Index: " + result2);
+        System.out.println("Binary Search Time: " + (endBinary - startBinary) + " ns");
+    }
+}
